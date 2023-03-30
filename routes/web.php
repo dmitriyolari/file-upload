@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('file-upload', [FileUploadController::class, 'index']);
+Route::get('file-uploading', [FileUploadController::class, 'index']);
+Route::get('file-upload', [FileUploadController::class, 'testChunks']);
 Route::post('file-upload', [FileUploadController::class, 'uploadFiles'])->name('file.upload');
 
