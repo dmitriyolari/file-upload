@@ -51,4 +51,19 @@ class FileUploadController extends Controller {
             'status' => true
         ];
     }
+
+    public function testChunks(Request $request)
+    {
+        $resumableIdentifier = $request->query('resumableIdentifier');
+        $resumableChunkNumber = $request->query('resumableChunkNumber');
+        $storageContents = Storage::disk('local')->files('chunks');
+        foreach ($storageContents as $storageContent) {
+            $contains = str_contains($storageContent, $resumableIdentifier . '.' . $resumableChunkNumber . '.');
+            if ($contains) {
+                return response()->json([], 201);
+            }
+        }
+
+        return response()->json([], 404);
+    }
 }
